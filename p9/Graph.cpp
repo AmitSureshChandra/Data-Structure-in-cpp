@@ -1,13 +1,9 @@
 #include<iostream> 
-#include<queue>
 #include<list>
 #include<map>
+#include<queue>
 
 using namespace std;
-
-// int **adj; // adjacency matrix
-
-// list<Node>* adj;
 
 map<int, list<int>> adj;
 
@@ -18,58 +14,42 @@ void addEdge(int s, int e) {
     adj.at(e).push_back(s);
 }
 
-// void bfs(int n, int start) {
-//     bool visited[n];
-//     for (int i = 0; i < n; i++) {
-//         visited[i] = false;
-//     }
-//     queue<int> q;
-//     q.push(start);
-//     visited[start] = true;
-//     while (!q.empty()) {
-//         int current = q.front();
-//         q.pop();
-//         cout << current << " ";
-//         for (int i = 0; i < n; i++) {
-//             if (adj[current][i] == 1 && !visited[i]) {
-//                 q.push(i);
-//                 visited[i] = true;
-//             }
-//         }
-//     }
-//     cout << endl;
-// }
+void dfs(int n, bool* visited) {
+    if(visited[n]) return;
+    visited[n] = true;
+    cout<< n << " ";
+    list<int> l = adj.at(n);
+    list<int>::iterator it;
+    for(it = l.begin(); it != l.end(); it++) {
+        dfs(*it, visited);
+    }
+}
 
-// void dfsUtil(int v, bool visited[]) {
-//     visited[v] = true;
-//     cout << v << " ";
-//     for (int i = 0; i < sizeof(visited)/sizeof(visited[0]); i++) {
-//         if (adj[v][i] == 1 && !visited[i]) {
-//             dfsUtil(i, visited);
-//         }
-//     }
-// }
-
-// void dfs(int n, int start) {
-//     bool visited[n];
-//     for (int i = 0; i < n; i++) {
-//         visited[i] = false;
-//     }
-//     dfsUtil(start, visited);
-//     cout << endl;
-// }
-
+void bfs(int n, int size) {
+    bool* visited = new bool[size];
+    queue<int> q;
+    q.push(n);
+    visited[n] = true;
+    while(!q.empty()) {
+        list<int> l = adj.at(q.front());
+        cout<< q.front() << " ";
+        q.pop();
+        list<int>::iterator it;
+        for(it = l.begin(); it != l.end(); it++) {
+            if(!visited[*it]) {
+                q.push(*it);
+                visited[*it] = true;
+            }
+        }
+    }
+    cout<<endl;
+}
 
 int main() {
     // no of nodes
     int n;
     cout<< "Enter no of nodes : ";
     cin >>n;
-
-    // adj = new int*[n];  // creating dynamic adjacency matrix
-    // for(int i=0; i<n; i++){
-    //     adj[i] = new int[n];
-    // }
 
     // no of edges
     int edges;
@@ -83,11 +63,13 @@ int main() {
         addEdge(s, e);
     }
 
-    // int start;
-    // cout << "Enter the starting node for BFS and DFS: ";
-    // cin >> start;
-    // bfs(n, start);
-    // dfs(n, start);
+    int start;
+    cout<<"Enter the start node : ";
+    cin >> start;
 
+    cout<< "dfs : ";
+    dfs(start, new bool[n]);
+    cout<<"\nbfs : ";
+    bfs(start, n);
     return 0;
 }
