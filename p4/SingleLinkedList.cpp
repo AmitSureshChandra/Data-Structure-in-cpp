@@ -116,19 +116,15 @@ int main() {
             cin >> temp;
             removeVal(temp);
             break;
-
         case '5':
             removeAt(0);
             break;
-
         case '6':
             removeAt(length-1);
             break;
-
         case '7':
             print();
             break;
-
         case '8':
             system("clear"); // clear the screen
 
@@ -143,15 +139,12 @@ int main() {
             cout<<"8. clear screen"<< endl;
             cout<<"9. exit"<< endl;
             break;
-            
         case '9':
             exit(0);
-
         default:
             cout<<"Invalid Choice"<< endl;
             break;
         }
     }
-
     return 0;
 }
